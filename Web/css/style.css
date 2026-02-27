@@ -5,3 +5,33 @@
     --level1:#dda15e;
     --level2:#bc6c25;
 }
+body{
+    background-color: var(--bg);
+    font-family: 'Poppins', sans-serif;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    height: 70px;
+    background-color: var(--level1);
+    color: var(--bg);
+    font-size: medium;
+    font-weight: 500;
+}
+nav{
+    background-color: var(--nav1);
+    color: var(--bg);
+    padding: 10px 10%;
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+nav ul li a{
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: 500;
+}
