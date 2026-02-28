@@ -1,34 +1,433 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignoFy</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SignoFy — Aprende Lengua de Signos, gratis</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-    <header>
-        <div>
-            <h1>SignoFy</h1>
-            <h3>Aprender LSE es mucho más natural de lo que crees</h3>
+
+<!-- ── NAV ────────────────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="#" class="logo">Signo<em>Fy</em> 🤟</a>
+  <ul class="nav-links">
+    <li><a href="#about">La app</a></li>
+    <li><a href="#features">Funciones</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#waitlist-form-section" class="nav-cta">Unirme a la lista</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <div class="hero-text">
+    <div class="honesty-pill">🌱 Proyecto en desarrollo · Acceso anticipado, gratis</div>
+    <h1>Aprende Lengua de Signos<br><em>jugando de verdad</em></h1>
+    <p class="hero-sub">SignoFy es una app gamificada para aprender LSE. Todavía está en construcción, pero puedes ser de las primeras personas en probarla.</p>
+    <div class="early-note">
+      <strong>🫶 Un momento de honestidad:</strong> SignoFy no está publicada todavía. No hay miles de usuarios ni estadísticas impresionantes. Hay una idea sólida, muchas ganas de hacerlo bien y la comunidad que estamos construyendo juntos desde cero.
+    </div>
+    <div class="hero-actions">
+      <a href="#waitlist-form-section" class="btn btn-primary">🙋 Apuntarme a la lista de espera</a>
+      <a href="#about" class="btn btn-outline">Saber más</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="ps-top"><span>SignoFy</span><span>🔋 97%</span></div>
+          <div class="ps-body">
+            <div class="ps-bar-wrap">
+              <div class="ps-bar-label"><span>Progreso hoy</span><span>42%</span></div>
+              <div class="ps-bar"><div class="ps-fill"></div></div>
+            </div>
+            <div class="ps-greeting">¡Hola! Lección del día 👋</div>
+            <div class="ps-card">
+              <div class="ps-hand">🤟</div>
+              <div class="ps-q">¿Qué signo es este?</div>
+            </div>
+            <div class="ps-opts">
+              <div class="ps-opt ok">✓ Te quiero</div>
+              <div class="ps-opt">Hola</div>
+              <div class="ps-opt">Gracias</div>
+              <div class="ps-opt">Ayuda</div>
+            </div>
+          </div>
         </div>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Cursos</a></li>
-            <li><a href="#">Recursos</a></li>
-            <li><a href="#">Contacto</a></li>
-        </ul>
-    </nav>
-    <main>
+      </div>
+      <div class="float-badge fb-1">🔥 Racha de 3 días</div>
+      <div class="float-badge fb-2">⭐ +30 XP ganados</div>
+    </div>
+  </div>
+</section>
 
-    </main>
-    <footer>
+<!-- ── TRANSPARENCIA ──────────────────────────────────────── -->
+<section id="transparency">
+  <div class="transp-inner">
+    <div class="transp-icon">🤍</div>
+    <div class="transp-text">
+      <h2>Transparencia total: ¿qué es SignoFy ahora mismo?</h2>
+      <p>SignoFy es un <strong>proyecto personal en fase de desarrollo activo</strong>. No es una empresa consolidada ni una app publicada. Es una idea en la que creo profundamente, construida con el objetivo de que sea útil, accesible y gratuita para cualquier persona que quiera aprender LSE.</p>
+      <p>Apuntarte a la lista de espera significa que <strong>serás de las primeras personas en acceder cuando esté lista</strong>, que tu feedback ayudará a dar forma a la app y que recibirás actualizaciones honestas sobre el progreso, sin humo ni promesas vacías.</p>
+      <div class="transp-tags">
+        <div class="transp-tag">✅ Gratis de base, siempre</div>
+        <div class="transp-tag">✅ Sin descargas aún</div>
+        <div class="transp-tag">✅ En desarrollo activo</div>
+        <div class="transp-tag">✅ Sin estadísticas inventadas</div>
+        <div class="transp-tag">✅ Tu opinión da forma al producto</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    </footer>
+<!-- ── ABOUT ───────────────────────────────────────────────── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="section-label">La idea</p>
+      <h2 class="section-title">¿Por qué existe SignoFy?</h2>
+      <p class="section-sub">Aprender lengua de signos debería ser accesible para todo el mundo. Las opciones actuales son caras, aburridas o no están adaptadas a LSE. SignoFy nace para cambiar eso: aprendizaje real, gamificado, gratuito y creado con respeto a la comunidad sorda.</p>
+    </div>
+    <div class="about-cards reveal">
+      <div class="about-card">
+        <div class="about-card-icon">🎮</div>
+        <div>
+          <h3>Gamificación que motiva</h3>
+          <p>Puntos, rachas, insignias y ligas para que quieras volver cada día. No por obligación, sino porque apetece.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🤲</div>
+        <div>
+          <h3>Contenido validado con la comunidad sorda</h3>
+          <p>El diccionario y las lecciones se construirán con y para personas sordas. No hay otra manera de hacerlo bien.</p>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🌍</div>
+        <div>
+          <h3>Gratis de base, sin trampa</h3>
+          <p>El aprendizaje no puede depender del dinero que tengas. El plan gratuito será completo y de verdad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ───────────────────────────────────────────── -->
+<section id="features">
+  <p class="section-label reveal">Funciones planeadas</p>
+  <h2 class="section-title reveal">Lo que SignoFy tendrá</h2>
+  <p class="section-sub reveal">Algunas ya están en desarrollo, otras vendrán después. Sin adornos.</p>
+
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon">📚</div>
+      <h3>Lecciones por niveles</h3>
+      <p>De principiante a avanzado, con sesiones de 5-10 minutos pensadas para el día a día.</p>
+      <span class="feat-status status-current">🔨 En desarrollo</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🏆</div>
+      <h3>Sistema de XP y rachas</h3>
+      <p>Gana puntos, mantén tu racha diaria y sube en el ranking semanal de tu liga.</p>
+      <span class="feat-status status-current">🔨 En desarrollo</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">📖</div>
+      <h3>Diccionario visual de LSE</h3>
+      <p>Signos en vídeo con búsqueda por palabra, categoría y nivel de dificultad.</p>
+      <span class="feat-status status-soon">⏳ Próximamente</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">📹</div>
+      <h3>Reconocimiento de signos con IA</h3>
+      <p>La cámara analizará tus manos y te dará feedback en tiempo real. Una función compleja que llegará más adelante.</p>
+      <span class="feat-status status-plan">💡 En los planes</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">👥</div>
+      <h3>Comunidad y retos grupales</h3>
+      <p>Practica con otras personas, participa en retos semanales y forma grupos de estudio.</p>
+      <span class="feat-status status-plan">💡 En los planes</span>
+    </div>
+    <div class="feat-card reveal">
+      <div class="feat-icon">🌙</div>
+      <h3>Modo sin conexión</h3>
+      <p>Descarga lecciones para practicar en el metro, en el campo, donde sea.</p>
+      <span class="feat-status status-plan">💡 En los planes</span>
+    </div>
+  </div>
+
+  <div class="features-note reveal">
+    <strong>¿Tienes alguna función en mente?</strong> Si te apuntas a la lista de espera, puedes dejarnos tus sugerencias. Las más pedidas tienen prioridad en el roadmap.
+  </div>
+</section>
+
+<!-- ── ROADMAP ─────────────────────────────────────────────── -->
+<section id="roadmap">
+  <p class="section-label reveal">Roadmap</p>
+  <h2 class="section-title reveal">¿Dónde estamos y hacia dónde vamos?</h2>
+  <p class="section-sub reveal">Sin fechas inventadas. Sin promesas que no podamos cumplir.</p>
+
+  <div class="road-list">
+    <div class="road-item reveal">
+      <div class="road-date">Completado</div>
+      <div class="road-content">
+        <h3>Concepto y diseño de la app</h3>
+        <p>Definición de la idea, identidad visual, estructura de pantallas y flujo de usuario.</p>
+        <span class="road-tag tag-done">✓ Hecho</span>
+      </div>
+    </div>
+    <div class="road-item reveal">
+      <div class="road-date">Ahora mismo</div>
+      <div class="road-content">
+        <h3>Desarrollo del núcleo de la app</h3>
+        <p>Sistema de lecciones, motor de gamificación (XP, rachas, niveles) y base de datos de signos básicos.</p>
+        <span class="road-tag tag-current">⚡ En marcha</span>
+      </div>
+    </div>
+    <div class="road-item reveal">
+      <div class="road-date">Próximo paso</div>
+      <div class="road-content">
+        <h3>Beta privada con la lista de espera</h3>
+        <p>Las personas apuntadas serán las primeras en probar la app. Su feedback definirá la versión final.</p>
+        <span class="road-tag tag-next">Pronto</span>
+      </div>
+    </div>
+    <div class="road-item reveal">
+      <div class="road-date">Después</div>
+      <div class="road-content">
+        <h3>Lanzamiento público en App Store y Google Play</h3>
+        <p>Versión 1.0, completamente gratuita, con las funciones core probadas y pulidas.</p>
+        <span class="road-tag tag-next">En los planes</span>
+      </div>
+    </div>
+    <div class="road-item reveal">
+      <div class="road-date">Futuro</div>
+      <div class="road-content">
+        <h3>Diccionario completo, IA y comunidad</h3>
+        <p>Más contenido, reconocimiento de signos por cámara, grupos de práctica y más idiomas de signos.</p>
+        <span class="road-tag tag-next">Más adelante</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CÓMO FUNCIONA ──────────────────────────────────────── -->
+<section id="how">
+  <p class="section-label reveal">Cómo funcionará</p>
+  <h2 class="section-title reveal">Simple, progresivo y adictivo</h2>
+  <p class="section-sub reveal">El método de aprendizaje que queremos construir, basado en repetición espaciada y motivación continua.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-n">1</div>
+      <h3>Crea tu perfil</h3>
+      <p>Cuéntanos tu nivel y tus objetivos. La app te genera un plan personalizado.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-n">2</div>
+      <h3>Haz lecciones cortas</h3>
+      <p>10 minutos al día son suficientes. Cada sesión combina vídeo, práctica y test.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-n">3</div>
+      <h3>Gana puntos y sube de nivel</h3>
+      <p>Cada lección completada te da XP, mantiene tu racha y te acerca a la siguiente insignia.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-n">4</div>
+      <h3>Practica con otros</h3>
+      <p>Únete a retos, conecta con la comunidad y aplica lo aprendido en contextos reales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── LISTA DE ESPERA (info) ─────────────────────────────── -->
+<section id="waitlist">
+  <div class="reveal">
+    <p class="section-label">Lista de espera</p>
+    <h2 class="section-title">Sé parte de SignoFy desde el principio</h2>
+    <p class="section-sub">Apuntarte es gratis, sin compromiso y sin tarjeta de crédito. Solo te avisaremos cuando haya novedades de verdad.</p>
+    <div class="waitlist-note">
+      <strong>¿Qué consigues apuntándote?</strong><br><br>
+      · Acceso prioritario a la beta privada<br>
+      · Tu feedback influirá directamente en el desarrollo<br>
+      · Actualizaciones honestas del progreso del proyecto<br>
+      · Nada de spam, lo prometemos
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="mini-cards">
+      <div class="mini-card">
+        <div class="mini-card-icon">📩</div>
+        <div class="mini-card-text">Recibirás un email de confirmación <strong>inmediatamente</strong> al apuntarte.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-icon">🔕</div>
+        <div class="mini-card-text"><strong>Sin spam.</strong> Solo te escribiremos cuando haya algo importante que contar.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-icon">🗑️</div>
+        <div class="mini-card-text">Puedes darte de baja <strong>en cualquier momento</strong> con un solo clic.</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-icon">🔒</div>
+        <div class="mini-card-text">Tus datos <strong>nunca se venden</strong> ni se comparten con terceros. Cumplimos RGPD.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FORMULARIO LISTA DE ESPERA ─────────────────────────── -->
+<div id="waitlist-form-section">
+  <div class="form-wrap reveal">
+    <h3>Apúntame a la lista de espera 🙌</h3>
+    <form class="waitlist-form" id="wl-form" onsubmit="handleWaitlist(event)">
+      <div class="form-row">
+        <input class="inp" type="text" name="nombre" placeholder="Tu nombre" required />
+        <input class="inp" type="email" name="email" placeholder="tu@email.com" required />
+      </div>
+      <select class="inp" name="motivo">
+        <option value="" disabled selected>¿Por qué quieres aprender LSE? (opcional)</option>
+        <option>Tengo un familiar o amigo sordo</option>
+        <option>Por curiosidad o interés personal</option>
+        <option>Por razones profesionales</option>
+        <option>Soy persona sorda o con discapacidad auditiva</option>
+        <option>Para usarlo en mi profesión (educación, sanidad…)</option>
+        <option>Otro motivo</option>
+      </select>
+      <textarea class="inp" name="sugerencias" placeholder="¿Hay alguna función que te gustaría ver en la app? (opcional)"></textarea>
+      <div class="form-agree">
+        <input type="checkbox" id="agree" required />
+        <label for="agree">He leído y acepto la <a href="#">política de privacidad</a>. Entiendo que me apunto a la lista de espera de una app <strong>en desarrollo</strong>, no a un servicio ya disponible.</label>
+      </div>
+      <button type="submit" class="btn btn-primary">🙋 Apuntarme gratis</button>
+    </form>
+    <div class="success-box" id="wl-success">
+      <div class="success-emoji">🎉</div>
+      <strong>¡Ya estás en la lista!</strong><br>
+      Te hemos enviado un email de confirmación. Estarás entre las primeras personas en probar SignoFy cuando esté lista. Gracias de verdad por tu confianza y paciencia mientras construimos esto.
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ ─────────────────────────────────────────────────── -->
+<section id="faq">
+  <p class="section-label reveal">Preguntas frecuentes</p>
+  <h2 class="section-title reveal">Lo que la gente pregunta</h2>
+
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Cuándo estará disponible para descargar?
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">Honestamente, no tenemos una fecha fija todavía. Preferimos tomarnos el tiempo necesario para hacerlo bien antes que lanzar algo a medias. Las personas de la lista de espera serán las primeras en saberlo.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿De verdad es gratis? ¿Habrá pagos en algún momento?
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">El plan base será gratuito de verdad, sin límite de tiempo. Más adelante puede existir un plan de pago con funciones extra, pero las lecciones core y el diccionario básico serán siempre gratuitos. No creemos en los modelos que encierran el aprendizaje detrás de un muro de pago.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Para quién es SignoFy?
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">Para cualquier persona que quiera aprender Lengua de Signos Española: familiares de personas sordas, profesionales, curiosos, estudiantes. También esperamos que sea útil para personas sordas que quieran practicar con oyentes o enseñar LSE.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Qué hacéis con mis datos al apuntarme?
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">Tu email y nombre se usan exclusivamente para avisarte del progreso de la app y del acceso a la beta. No se venden, no se comparten con terceros y puedes borrarte cuando quieras con un clic. Cumplimos con el RGPD.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿Puedo ayudar al proyecto de alguna forma?
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">¡Sí! La forma más valiosa ahora mismo es apuntarte y contarnos qué necesitas que tenga la app. Si eres intérprete de LSE, persona sorda o tienes experiencia en diseño o desarrollo y quieres colaborar, escríbenos a hola@signofy.app</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        ¿La LSE que enseñaréis estará validada por la comunidad sorda?
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-a">Es una prioridad absoluta. Estamos construyendo el contenido con la colaboración de personas sordas nativas e intérpretes certificados. No publicaremos ningún signo sin esa validación. Si tienes experiencia en este ámbito y quieres ayudar, por favor, ponte en contacto.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo" style="color:var(--cream)">Signo<em style="color:var(--sand)">Fy</em> 🤟</div>
+      <p>Una app de aprendizaje de LSE creada con ilusión y honestidad. En construcción, pero con las ideas muy claras.</p>
+    </div>
+    <div class="footer-col">
+      <h4>App</h4>
+      <ul>
+        <li><a href="#about">La idea</a></li>
+        <li><a href="#features">Funciones planeadas</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#waitlist-form-section">Lista de espera</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Proyecto</h4>
+      <ul>
+        <li><a href="#transparency">Transparencia</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="mailto:hola@signofy.app">Contacto</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 SignoFy · Proyecto en desarrollo · Hecho con 🤟 y mucha ilusión</p>
+    <div class="footer-legal">
+      <a href="#">Privacidad</a>
+      <a href="#">Cookies</a>
+      <a href="#">RGPD</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── COOKIE BANNER ──────────────────────────────────────── -->
+<div id="cookie">
+  <p>Usamos cookies mínimas para recordar tu visita. Sin rastreo publicitario. <a href="#">Más info</a>.</p>
+  <div class="cookie-btns">
+    <button class="btn btn-outline" style="padding:.5rem 1.1rem;font-size:.82rem;color:var(--cream);border-color:rgba(254,250,224,.2)" onclick="closeCookie()">Solo necesarias</button>
+    <button class="btn btn-terra" style="padding:.5rem 1.1rem;font-size:.82rem" onclick="closeCookie()">Aceptar</button>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="main.js"></script>
+
 </body>
-
 </html>
