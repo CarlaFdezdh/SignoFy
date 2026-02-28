@@ -49,16 +49,15 @@ signofy/
 
 | Variable | Valor | Uso principal |
 |---|---|---|
-| `--cream` | `#FEFAE0` | Fondo general |
-| `--forest` | `#283618` | Texto principal, fondos oscuros |
-| `--moss` | `#606C38` | Texto secundario, acentos verdes |
-| `--sand` | `#DDA15E` | Highlights y detalles cálidos |
-| `--terra` | `#BC6C25` | CTAs, etiquetas, énfasis |
+| `--cream` | `#FFFBF0` | Fondo general |
+| `--forest` | `#1A0A2E` | Texto principal, fondos oscuros |
+| `--moss` | `#6B21A8` | Morado vibrante, acentos primarios |
+| `--sand` | `#FACC15` | Amarillo limón, highlights |
+| `--terra` | `#F97316` | Naranja, CTAs, énfasis |
 
 ### Tipografía
 
-- **Títulos:** [Playfair Display](https://fonts.google.com/specimen/Playfair+Display) — pesos 700, 900 e itálica
-- **Cuerpo:** [DM Sans](https://fonts.google.com/specimen/DM+Sans) — pesos 300, 400 y 500
+- **Títulos y cuerpo:** [Nunito](https://fonts.google.com/specimen/Nunito) — pesos 400, 600, 700, 800 y 900
 
 Ambas fuentes se cargan desde Google Fonts. No requieren instalación local.
 
