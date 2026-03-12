@@ -1,7 +1,10 @@
-// lib/screens/sign_detail_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/sign.dart';
+import '../providers/app_provider.dart';
 import '../theme/app_theme.dart';
 
 class SignDetailScreen extends StatelessWidget {
@@ -92,6 +95,9 @@ class _VideoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final api = context.read<AppProvider>().apiService;
+    final headers = api.getAuthHeaders();
+
     return Container(
       height: 260,
       decoration: BoxDecoration(
@@ -108,71 +114,74 @@ class _VideoSection extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Contenido (placeholder o vídeo real)
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    gradient: AppTheme.primaryGradient,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppTheme.primary.withOpacity(0.4),
-                        blurRadius: 24,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.sign_language_rounded,
-                    size: 48,
-                    color: Colors.white,
+          // Si hay imagen, cargarla con la cookie de sesión
+          if (sign.imageUrl != null)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: CachedNetworkImage(
+                imageUrl: sign.imageUrl!,
+                httpHeaders: headers,
+                width: double.infinity,
+                height: 260,
+                fit: BoxFit.cover,
+                placeholder: (_, __) => const Center(
+                  child: CircularProgressIndicator(color: AppTheme.primary),
+                ),
+                errorWidget: (_, __, ___) => _PlaceholderIcon(),
+              ),
+            )
+          else
+            Center(child: _PlaceholderIcon()),
+
+          // Botón de vídeo encima si hay URL
+          if (sign.videoUrl != null)
+            Positioned(
+              bottom: 16,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: GestureDetector(
+                  onTap: () => _openVideo(context, sign.videoUrl!, headers),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppTheme.surfaceCard.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppTheme.primary.withOpacity(0.4)),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.play_circle_fill_rounded,
+                            color: AppTheme.primary, size: 20),
+                        SizedBox(width: 8),
+                        Text(
+                          'Ver el signo en vídeo',
+                          style: TextStyle(
+                            color: AppTheme.primary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                if (sign.videoUrl != null)
-                  ElevatedButton.icon(
-                    onPressed: () {/* TODO: VideoPlayerScreen */},
-                    icon: const Icon(Icons.play_arrow_rounded),
-                    label: const Text('Ver el signo en vídeo'),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 12),
-                    ),
-                  )
-                else
-                  const Text(
-                    'Vídeo próximamente',
-                    style: TextStyle(
-                      color: AppTheme.onSurfaceMuted,
-                      fontSize: 14,
-                    ),
-                  ),
-              ],
+              ),
             ),
-          ),
 
-          // Chip BCBL attribution
+          // Badge BCBL
           Positioned(
-            top: 12,
-            right: 12,
+            top: 12, right: 12,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: AppTheme.surfaceCard.withOpacity(0.8),
+                color: AppTheme.surfaceCard.withOpacity(0.85),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Text(
                 'LSE-Sign · BCBL',
-                style: TextStyle(
-                  color: AppTheme.onSurfaceMuted,
-                  fontSize: 10,
-                ),
+                style: TextStyle(color: AppTheme.onSurfaceMuted, fontSize: 10),
               ),
             ),
           ),
@@ -183,6 +192,150 @@ class _VideoSection extends StatelessWidget {
           duration: 400.ms,
           curve: Curves.easeOut,
         );
+  }
+
+  void _openVideo(BuildContext context, String url, Map<String, String> headers) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppTheme.surfaceCard,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) => _VideoPlayer(videoUrl: url, headers: headers),
+    );
+  }
+}
+
+class _PlaceholderIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100, height: 100,
+      decoration: BoxDecoration(
+        gradient: AppTheme.primaryGradient,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.primary.withOpacity(0.4),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: const Icon(Icons.sign_language_rounded, size: 48, color: Colors.white),
+    );
+  }
+}
+
+class _VideoPlayer extends StatefulWidget {
+  final String videoUrl;
+  final Map<String, String> headers;
+  const _VideoPlayer({required this.videoUrl, required this.headers});
+
+  @override
+  State<_VideoPlayer> createState() => _VideoPlayerState();
+}
+
+class _VideoPlayerState extends State<_VideoPlayer> {
+  late VideoPlayerController _controller;
+  bool _initialized = false;
+  bool _error = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.networkUrl(
+      Uri.parse(widget.videoUrl),
+      httpHeaders: widget.headers,
+    )..initialize().then((_) {
+        setState(() => _initialized = true);
+        _controller.play();
+        _controller.setLooping(true);
+      }).catchError((_) {
+        setState(() => _error = true);
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 380,
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Container(
+            width: 40, height: 4,
+            decoration: BoxDecoration(
+              color: AppTheme.onSurfaceMuted,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: _error
+                ? const Center(
+                    child: Text(
+                      'No se pudo cargar el vídeo.\nComprueba tu conexión.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: AppTheme.onSurfaceMuted),
+                    ),
+                  )
+                : !_initialized
+                    ? const Center(
+                        child: CircularProgressIndicator(color: AppTheme.primary),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        ),
+                      ),
+          ),
+          const SizedBox(height: 16),
+          if (_initialized)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _controller.value.isPlaying
+                          ? _controller.pause()
+                          : _controller.play();
+                    });
+                  },
+                  icon: Icon(
+                    _controller.value.isPlaying
+                        ? Icons.pause_circle_filled_rounded
+                        : Icons.play_circle_filled_rounded,
+                    color: AppTheme.primary,
+                    size: 48,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    _controller.seekTo(Duration.zero);
+                    _controller.play();
+                  },
+                  icon: const Icon(
+                    Icons.replay_rounded,
+                    color: AppTheme.onSurfaceMuted,
+                    size: 32,
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
   }
 }
 

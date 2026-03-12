@@ -1,27 +1,28 @@
-// lib/services/lse_api_service.dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/sign.dart';
 
-/// Servicio de acceso a la base de datos LSE-Sign (BCBL)
-/// http://lse-sign.bcbl.eu/web-busqueda/
-///
-/// El portal usa WordPress + un plugin personalizado con llamadas AJAX.
-/// Las peticiones de búsqueda se hacen via POST a wp-admin/admin-ajax.php
-/// con action=buscar_signos y los parámetros de filtro.
 class LseApiService {
   static const String _baseUrl = 'http://lse-sign.bcbl.eu/web-busqueda';
   static const String _ajaxUrl = '$_baseUrl/wp-admin/admin-ajax.php';
   static const String _videoBaseUrl = '$_baseUrl/wp-content/uploads/videos';
 
-  // Sesión (requiere login para el portal)
+  // ─── PON AQUÍ TUS CREDENCIALES ───────────────────────────────────────────
+  static const String _defaultUser = 'CarlaFdez';
+  static const String _defaultPass = 'carla.03106';
+  // ─────────────────────────────────────────────────────────────────────────
+
   String? _sessionCookie;
   bool _isLoggedIn = false;
 
   bool get isLoggedIn => _isLoggedIn;
 
-  // ─── Autenticación ────────────────────────────────────────────────────────
-  /// Login en el portal LSE-Sign con las credenciales del investigador
+  Future<void> autoLogin() async {
+    if (!_isLoggedIn) {
+      await login(_defaultUser, _defaultPass);
+    }
+  }
+
   Future<bool> login(String username, String password) async {
     try {
       final response = await http.post(
@@ -50,17 +51,14 @@ class LseApiService {
     }
   }
 
-  // ─── Búsqueda de signos ───────────────────────────────────────────────────
-  /// Busca signos por texto libre
   Future<List<Sign>> searchSigns(String query, {int limit = 20}) async {
+    await autoLogin();
     try {
       final headers = <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded',
         'X-Requested-With': 'XMLHttpRequest',
       };
-      if (_sessionCookie != null) {
-        headers['Cookie'] = _sessionCookie!;
-      }
+      if (_sessionCookie != null) headers['Cookie'] = _sessionCookie!;
 
       final response = await http.post(
         Uri.parse(_ajaxUrl),
@@ -76,14 +74,13 @@ class LseApiService {
         return _parseSignsResponse(response.body);
       }
     } catch (e) {
-      // En desarrollo: devolver datos de ejemplo
       return _getMockSigns(query);
     }
     return _getMockSigns(query);
   }
 
-  /// Busca signos por categoría
   Future<List<Sign>> getSignsByCategory(String category, {int limit = 30}) async {
+    await autoLogin();
     try {
       final headers = <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -108,8 +105,8 @@ class LseApiService {
     return _getMockSignsByCategory(category);
   }
 
-  /// Obtiene los signos de una lección concreta (por IDs)
   Future<List<Sign>> getSignsByIds(List<String> ids) async {
+    await autoLogin();
     try {
       final headers = <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -133,16 +130,12 @@ class LseApiService {
     return [];
   }
 
-  // ─── Construcción de URL de vídeo ─────────────────────────────────────────
-  /// Construye la URL de vídeo para un signo dado su ID en la BD de BCBL
   String getVideoUrl(String signId) {
     return '$_videoBaseUrl/$signId.mp4';
   }
 
-  // ─── Parsers ─────────────────────────────────────────────────────────────
   List<Sign> _parseSignsResponse(String body) {
     try {
-      // El endpoint puede devolver JSON directamente o HTML con datos embedded
       if (body.trim().startsWith('[') || body.trim().startsWith('{')) {
         final dynamic decoded = jsonDecode(body);
         if (decoded is List) {
@@ -156,7 +149,6 @@ class LseApiService {
               .toList();
         }
       }
-      // Fallback: parsear HTML
       return _parseSignsFromHtml(body);
     } catch (_) {
       return [];
@@ -165,7 +157,6 @@ class LseApiService {
 
   List<Sign> _parseSignsFromHtml(String html) {
     final signs = <Sign>[];
-    // Extraer datos del HTML usando regex para patrones conocidos del portal
     final videoPattern = RegExp(
       r'<video[^>]*src="([^"]+)"[^>]*>',
       caseSensitive: false,
@@ -188,116 +179,39 @@ class LseApiService {
     return signs;
   }
 
-  // ─── Datos de demostración ────────────────────────────────────────────────
-  /// Signos de ejemplo mientras no hay conexión o credenciales
   List<Sign> _getMockSigns(String query) {
     final all = _allMockSigns();
     if (query.isEmpty) return all.take(10).toList();
     final lower = query.toLowerCase();
-    return all
-        .where((s) => s.word.toLowerCase().contains(lower))
-        .toList();
+    return all.where((s) => s.word.toLowerCase().contains(lower)).toList();
   }
 
   List<Sign> _getMockSignsByCategory(String category) {
-    return _allMockSigns()
-        .where((s) => s.category == category)
-        .toList();
+    return _allMockSigns().where((s) => s.category == category).toList();
   }
 
+  Map<String, String> getAuthHeaders() {
+  if (_sessionCookie == null) return {};
+  return {
+    'Cookie': _sessionCookie!,
+    'Referer': _baseUrl,
+  };
+}
   List<Sign> _allMockSigns() => [
-    Sign(
-      id: '1', word: 'Hola',
-      videoUrl: '$_videoBaseUrl/1.mp4',
-      category: 'Saludos y despedidas',
-      difficulty: 'basico',
-      definition: 'Saludo informal y cordial',
-    ),
-    Sign(
-      id: '2', word: 'Adiós',
-      videoUrl: '$_videoBaseUrl/2.mp4',
-      category: 'Saludos y despedidas',
-      difficulty: 'basico',
-      definition: 'Despedida estándar',
-    ),
-    Sign(
-      id: '3', word: 'Gracias',
-      videoUrl: '$_videoBaseUrl/3.mp4',
-      category: 'Saludos y despedidas',
-      difficulty: 'basico',
-      definition: 'Expresión de agradecimiento',
-    ),
-    Sign(
-      id: '4', word: 'Por favor',
-      videoUrl: '$_videoBaseUrl/4.mp4',
-      category: 'Saludos y despedidas',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '5', word: 'Sí',
-      videoUrl: '$_videoBaseUrl/5.mp4',
-      category: 'Saludos y despedidas',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '6', word: 'No',
-      videoUrl: '$_videoBaseUrl/6.mp4',
-      category: 'Saludos y despedidas',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '7', word: 'Te quiero',
-      videoUrl: '$_videoBaseUrl/7.mp4',
-      category: 'Emociones',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '8', word: 'Feliz',
-      videoUrl: '$_videoBaseUrl/8.mp4',
-      category: 'Emociones',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '9', word: 'Triste',
-      videoUrl: '$_videoBaseUrl/9.mp4',
-      category: 'Emociones',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '10', word: 'Ayuda',
-      videoUrl: '$_videoBaseUrl/10.mp4',
-      category: 'Verbos cotidianos',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '11', word: 'Madre',
-      videoUrl: '$_videoBaseUrl/11.mp4',
-      category: 'Familia',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '12', word: 'Padre',
-      videoUrl: '$_videoBaseUrl/12.mp4',
-      category: 'Familia',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '13', word: 'Hermano',
-      videoUrl: '$_videoBaseUrl/13.mp4',
-      category: 'Familia',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '14', word: 'Uno',
-      videoUrl: '$_videoBaseUrl/14.mp4',
-      category: 'Números',
-      difficulty: 'basico',
-    ),
-    Sign(
-      id: '15', word: 'Dos',
-      videoUrl: '$_videoBaseUrl/15.mp4',
-      category: 'Números',
-      difficulty: 'basico',
-    ),
+    Sign(id: '1', word: 'Hola', videoUrl: '$_videoBaseUrl/1.mp4', category: 'Saludos y despedidas', difficulty: 'basico', definition: 'Saludo informal y cordial'),
+    Sign(id: '2', word: 'Adiós', videoUrl: '$_videoBaseUrl/2.mp4', category: 'Saludos y despedidas', difficulty: 'basico', definition: 'Despedida estándar'),
+    Sign(id: '3', word: 'Gracias', videoUrl: '$_videoBaseUrl/3.mp4', category: 'Saludos y despedidas', difficulty: 'basico', definition: 'Expresión de agradecimiento'),
+    Sign(id: '4', word: 'Por favor', videoUrl: '$_videoBaseUrl/4.mp4', category: 'Saludos y despedidas', difficulty: 'basico'),
+    Sign(id: '5', word: 'Sí', videoUrl: '$_videoBaseUrl/5.mp4', category: 'Saludos y despedidas', difficulty: 'basico'),
+    Sign(id: '6', word: 'No', videoUrl: '$_videoBaseUrl/6.mp4', category: 'Saludos y despedidas', difficulty: 'basico'),
+    Sign(id: '7', word: 'Te quiero', videoUrl: '$_videoBaseUrl/7.mp4', category: 'Emociones', difficulty: 'basico'),
+    Sign(id: '8', word: 'Feliz', videoUrl: '$_videoBaseUrl/8.mp4', category: 'Emociones', difficulty: 'basico'),
+    Sign(id: '9', word: 'Triste', videoUrl: '$_videoBaseUrl/9.mp4', category: 'Emociones', difficulty: 'basico'),
+    Sign(id: '10', word: 'Ayuda', videoUrl: '$_videoBaseUrl/10.mp4', category: 'Verbos cotidianos', difficulty: 'basico'),
+    Sign(id: '11', word: 'Madre', videoUrl: '$_videoBaseUrl/11.mp4', category: 'Familia', difficulty: 'basico'),
+    Sign(id: '12', word: 'Padre', videoUrl: '$_videoBaseUrl/12.mp4', category: 'Familia', difficulty: 'basico'),
+    Sign(id: '13', word: 'Hermano', videoUrl: '$_videoBaseUrl/13.mp4', category: 'Familia', difficulty: 'basico'),
+    Sign(id: '14', word: 'Uno', videoUrl: '$_videoBaseUrl/14.mp4', category: 'Números', difficulty: 'basico'),
+    Sign(id: '15', word: 'Dos', videoUrl: '$_videoBaseUrl/15.mp4', category: 'Números', difficulty: 'basico'),
   ];
 }
