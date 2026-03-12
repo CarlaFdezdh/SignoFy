@@ -1,34 +1,42 @@
-# Gradle files
-.gradle/
+# ─── Flutter ──────────────────────────────────────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
 build/
 
-# Local configuration file (sdk path, etc)
-local.properties
+# ─── Android ──────────────────────────────────────────────────────────────────
+android/local.properties        # Contiene rutas locales del SDK
+android/.gradle/
+android/captures/
+android/.idea/
+android/key.properties          # ¡NUNCA subir la clave de firma!
+*.jks                           # Keystore de firma
 
-# Log/OS Files
-*.log
+# ─── iOS ──────────────────────────────────────────────────────────────────────
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig  # Generado por flutter pub get
+ios/Flutter/flutter_export_environment.sh
+ios/Pods/                       # Generado por pod install
+ios/Runner.xcworkspace/
+ios/*.xcworkspace
+*.xcworkspace
+Podfile.lock                    # Opcional: algunos equipos lo commitean
 
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.aab
-*.apk
-output-metadata.json
+# ─── Dart ─────────────────────────────────────────────────────────────────────
+*.g.dart                        # Generado por build_runner (Hive)
 
-# IntelliJ
-*.iml
+# ─── IDE ──────────────────────────────────────────────────────────────────────
 .idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
 
-# Keystore files
-*.jks
-*.keystore
-
-# Google Services (e.g. APIs or Firebase)
-google-services.json
-
-# Android Profiling
-*.hprof
+# ─── Secrets / Credenciales ───────────────────────────────────────────────────
+secrets.dart
+*_credentials.dart
+.env

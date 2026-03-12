@@ -1,166 +1,166 @@
-# SignoFy — Landing Page
+# SignoFy 🤟
 
-Web de presentación y lista de espera para **SignoFy**, una aplicación gratuita y gamificada para aprender Lengua de Signos Española (LSE).
+**App gamificada para aprender Lengua de Signos Española (LSE), gratis.**
 
----
-
-## Descripción
-
-Este repositorio contiene la landing page informativa de SignoFy. La aplicación está en desarrollo activo y aún no tiene descargas disponibles. El objetivo de esta web es explicar la propuesta de valor, mostrar el roadmap real del proyecto y recoger personas interesadas en participar en la beta privada.
-
-La web está construida con **HTML, CSS y JavaScript puro**, sin frameworks ni dependencias externas, para que sea fácil de mantener y desplegar en cualquier hosting estático.
+> Proyecto en desarrollo activo · Flutter + Dart
 
 ---
 
-## Estructura de archivos
+## 🏗️ Arquitectura del proyecto
 
 ```
-signofy/
-├── index.html      # Estructura HTML de todas las secciones
-├── styles.css      # Estilos, variables CSS y diseño responsive
-├── main.js         # Lógica: scroll, FAQ, formulario, menú móvil
-└── README.md       # Este archivo
+lib/
+├── main.dart                    # Entrada de la app
+├── app.dart                     # MaterialApp + router + Provider
+├── theme/
+│   └── app_theme.dart           # Paleta, tipografía, ThemeData
+├── models/
+│   ├── sign.dart                # Modelo de signo LSE
+│   ├── lesson.dart              # Lecciones, ejercicios, resultados
+│   └── user_progress.dart       # XP, rachas, insignias, nivel
+├── services/
+│   ├── lse_api_service.dart     # Integración con LSE-Sign (BCBL)
+│   └── progress_service.dart   # Persistencia local (SharedPreferences)
+├── providers/
+│   └── app_provider.dart        # Estado global (ChangeNotifier)
+├── screens/
+│   ├── main_scaffold.dart       # Nav inferior + IndexedStack
+│   ├── home_screen.dart         # Dashboard, lección del día
+│   ├── lesson_screen.dart       # Quiz de signos con vídeo
+│   ├── results_screen.dart      # Pantalla de resultados + XP
+│   ├── dictionary_screen.dart   # Diccionario visual con búsqueda
+│   ├── sign_detail_screen.dart  # Detalle de un signo
+│   ├── profile_screen.dart      # Perfil, insignias, estadísticas
+│   └── onboarding_screen.dart   # Flujo de bienvenida
+└── widgets/
+    └── common_widgets.dart      # XpLevelBar, StreakChip, LessonCard...
 ```
 
 ---
 
-## Secciones de la web
+## ⚙️ Instalación y primeros pasos
 
-| Sección | Descripción |
-|---|---|
-| Nav | Menú fijo con scroll suave y versión colapsable en móvil |
-| Hero | Titular principal, nota de honestidad y mockup animado de la app |
-| Transparencia | Banner que explica el estado real del proyecto |
-| La idea | Por qué existe SignoFy y sus tres pilares principales |
-| Funciones | Tarjetas con estado real: en desarrollo / próximamente / en los planes |
-| Roadmap | Hoja de ruta sin fechas inventadas |
-| Cómo funciona | Los cuatro pasos del método de aprendizaje |
-| Lista de espera | Propuesta de valor para apuntarse y garantías de privacidad |
-| Formulario | Recogida de nombre, email, motivo y sugerencias |
-| FAQ | Seis preguntas frecuentes con acordeón interactivo |
-| Footer | Navegación secundaria, contacto y avisos legales |
-| Banner de cookies | Aviso mínimo con opción de aceptar o rechazar |
+### Requisitos
+- Flutter SDK ≥ 3.0
+- Dart ≥ 3.0
+- Android Studio / VS Code con plugin Flutter
 
----
-
-## Diseño
-
-### Paleta de colores
-
-| Variable | Valor | Uso principal |
-|---|---|---|
-| `--cream` | `#FFFBF0` | Fondo general |
-| `--forest` | `#1A0A2E` | Texto principal, fondos oscuros |
-| `--moss` | `#6B21A8` | Morado vibrante, acentos primarios |
-| `--sand` | `#FACC15` | Amarillo limón, highlights |
-| `--terra` | `#F97316` | Naranja, CTAs, énfasis |
-
-### Tipografía
-
-- **Títulos y cuerpo:** [Nunito](https://fonts.google.com/specimen/Nunito) — pesos 400, 600, 700, 800 y 900
-
-Ambas fuentes se cargan desde Google Fonts. No requieren instalación local.
-
----
-
-## Uso en local
-
-No se necesita ningún proceso de build, servidor de desarrollo ni gestor de paquetes. Basta con clonar el repositorio y abrir el archivo principal en el navegador.
+### 1. Clonar y dependencias
 
 ```bash
-# Abrir directamente en el navegador
-open index.html
+cd signofy
+flutter pub get
+```
 
-# O levantar un servidor local simple con Python
-python3 -m http.server 3000
-# Disponible en http://localhost:3000
+### 2. Ejecutar
+
+```bash
+flutter run
+```
+
+### 3. Compilar para producción
+
+```bash
+# Android
+flutter build apk --release
+
+# iOS
+flutter build ios --release
 ```
 
 ---
 
-## Formulario de lista de espera
+## 🔗 Integración con LSE-Sign BCBL
 
-El formulario llama a la función `handleWaitlist()` definida en `main.js`. En su estado actual muestra un mensaje de confirmación visual pero **no envía datos a ningún servidor**. Para activarlo, sustituye el cuerpo de la función con la llamada a tu servicio preferido:
+La base de datos de signos proviene del portal oficial:
+**http://lse-sign.bcbl.eu/web-busqueda/**
 
-```js
-function handleWaitlist(e) {
-  e.preventDefault();
+### Autenticación
+El portal requiere credenciales de investigador. Desde la app:
+1. Ve a **Perfil → Credenciales LSE-Sign (BCBL)**
+2. Introduce tu usuario y contraseña del portal
+3. La sesión se reutiliza en todas las búsquedas y vídeos
 
-  const data = new FormData(e.target);
+### Datos disponibles por signo
+- `word` — Palabra en español
+- `videoUrl` — URL del vídeo del signo
+- `category` — Categoría temática
+- `difficulty` — Nivel (básico / intermedio / avanzado)
+- `definition` — Definición
+- `grammaticalType` — Tipo gramatical (sustantivo, verbo...)
+- `location` — Localización corporal
+- `movement` — Descripción del movimiento
+- `isTwoHanded` — Si es bimanual
+- `synonyms` — Sinónimos / variantes
 
-  fetch('/api/waitlist', {
-    method: 'POST',
-    body: data
-  })
-    .then(res => res.json())
-    .then(() => {
-      document.getElementById('wl-form').style.display = 'none';
-      document.getElementById('wl-success').classList.add('show');
-    })
-    .catch(err => console.error('Error al enviar:', err));
-}
-```
-
-### Opciones de integración recomendadas
-
-| Servicio | Método | Notas |
-|---|---|---|
-| [Brevo](https://brevo.com) | API REST o formulario embebido | Plan gratuito amplio, cumple RGPD |
-| [Mailchimp](https://mailchimp.com) | Formulario embebido o API | Gratuito hasta 500 contactos |
-| [Airtable](https://airtable.com) + Make | Webhook desde el formulario | Sin necesidad de backend propio |
-| Google Sheets + Apps Script | `doPost()` en el script del sheet | Gratuito, datos en Google Drive |
+### Sin credenciales
+La app funciona con datos de demostración (15 signos de ejemplo) para permitir desarrollo y pruebas sin necesidad de acceso al portal.
 
 ---
 
-## Despliegue
+## 🎮 Sistema de gamificación
 
-Al ser HTML estático, puede desplegarse de forma gratuita en cualquiera de las siguientes plataformas:
+### XP y Niveles
+| Nivel | XP requerido | Título |
+|-------|-------------|--------|
+| 1     | 0           | Aprendiz |
+| 2     | 100         | Aprendiz |
+| 3     | 300         | Estudiante |
+| 5     | 1.000       | Comunicador |
+| 7     | 2.200       | Intérprete |
+| 10+   | 5.500+      | Maestro LSE |
 
-| Plataforma | Método |
-|---|---|
-| [Netlify](https://netlify.com) | Arrastrar la carpeta en netlify.com/drop o conectar el repositorio |
-| [Vercel](https://vercel.com) | `vercel deploy` desde la raíz del proyecto |
-| [GitHub Pages](https://pages.github.com) | Activar Pages en Settings del repositorio |
-| [Cloudflare Pages](https://pages.cloudflare.com) | Conectar el repositorio desde el panel |
+### Ligas
+- 🥉 **Bronce** — 0–499 XP
+- 🥈 **Plata** — 500–1.999 XP
+- 🥇 **Oro** — 2.000–4.999 XP
+- 💎 **Diamante** — 5.000+ XP
 
----
-
-## Personalización
-
-| Elemento | Ubicación |
-|---|---|
-| Nombre del proyecto y email de contacto | `index.html` — buscar `SignoFy` y `hola@signofy.app` |
-| Colores | `styles.css` — bloque `:root` al inicio del archivo |
-| Estado de cada función | `index.html` — sección `#features`, clases `status-current`, `status-soon`, `status-plan` |
-| Entradas del roadmap | `index.html` — sección `#roadmap` |
-| Preguntas del FAQ | `index.html` — sección `#faq` |
-| Año en el pie de página | `index.html` — último `<p>` dentro de `<footer>` |
-
----
-
-## Accesibilidad
-
-- Estructura semántica con `<nav>`, `<section>`, `<footer>`, `<form>` y `<label>`
-- Atributos `required` y `type` correctos en todos los campos del formulario
-- Navegación funcional por teclado
-- Contraste de color revisado para el texto principal
-- Pendiente: añadir la media query `prefers-reduced-motion` para las animaciones de entrada
+### Insignias (12 desbloqueables)
+- Rachas: 3, 7 y 30 días
+- XP: 100, 500, 1.000
+- Lecciones: 1, 10, 25
+- Perfectas: 5 lecciones sin errores
+- Categorías: Maestro de saludos, Maestro de números
 
 ---
 
-## Estado del proyecto
+## 📋 Roadmap de desarrollo
 
-SignoFy está en desarrollo activo. Esta landing refleja el estado real: no hay descargas disponibles ni usuarios registrados todavía.
+### v0.1 (actual)
+- [x] Arquitectura base
+- [x] Sistema de XP, niveles, rachas
+- [x] 12 insignias
+- [x] 10 lecciones precargadas
+- [x] Diccionario con búsqueda y filtro por categoría
+- [x] Integración API LSE-Sign BCBL
+- [x] Onboarding
+- [x] Persistencia local
 
-- [x] Diseño e identidad visual
-- [x] Landing page con lista de espera
-- [ ] Desarrollo del núcleo de la aplicación (en curso)
-- [ ] Beta privada con las personas apuntadas a la lista
-- [ ] Lanzamiento público en App Store y Google Play
-- [ ] Diccionario completo, reconocimiento por IA y funciones de comunidad
+### v0.2 (próximo)
+- [ ] Reproductor de vídeo integrado (chewie + video_player)
+- [ ] Modo sin conexión (descarga de lecciones)
+- [ ] Más tipos de ejercicio: completar frase, ordenar signos
+- [ ] Recordatorios diarios (local notifications)
+- [ ] Compartir progreso
+
+### v0.3
+- [ ] Liga semanal con ranking
+- [ ] Retos semanales
+- [ ] Modo repaso (spaced repetition)
+
+### v1.0
+- [ ] Reconocimiento de signos con IA (cámara)
+- [ ] Modo comunidad
 
 ---
 
-## Licencia
+## 🤝 Créditos
 
-Proyecto de uso personal. Para colaboraciones o reutilización del código, contactar en [hola@signofy.app](mailto:hola@signofy.app).
+- **Datos LSE**: LSE-Sign · BCBL (Basque Center on Cognition, Brain and Language) + Fundación CNSE
+- **App**: Proyecto SignoFy · Carla Fernández
+- **Framework**: Flutter / Dart
+
+---
+
+*Hecho con mucha ilusión 🤟*

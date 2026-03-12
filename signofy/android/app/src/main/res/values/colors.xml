@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores de SignoFy (deben coincidir con AppTheme en Dart) -->
+    <color name="surface">#FF1A1A2E</color>
+    <color name="primary">#FF7C4DFF</color>
+    <color name="nav_bar">#FF16213E</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

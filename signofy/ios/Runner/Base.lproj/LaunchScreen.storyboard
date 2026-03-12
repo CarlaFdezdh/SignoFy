@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB"
+    version="3.0" toolsVersion="32700.99.1234"
+    targetRuntime="AppleCocoa" propertyAccessControl="none"
+    useAutolayout="YES" launchScreen="YES"
+    useTraitCollections="YES" useSafeAreas="YES"
+    colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <!-- Icono de mano centrado -->
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO"
+                                contentMode="scaleAspectFit"
+                                horizontalHuggingPriority="251"
+                                verticalHuggingPriority="251"
+                                image="LaunchImage"
+                                translatesAutoresizingMaskIntoConstraints="NO"
+                                id="YRO-k0-Ey4">
+                                <rect key="frame" x="146.5" y="376" width="100" height="100"/>
+                            </imageView>
+                        </subviews>
+                        <!-- Fondo color #1A1A2E de SignoFy -->
+                        <color key="backgroundColor" red="0.1020" green="0.1020" blue="0.1804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="centerX"
+                                secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1a2-6s-vTC"/>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="centerY"
+                                secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4X2-HB-R7a"/>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="width"
+                                constant="120" id="5fk-AZ-5kV"/>
+                            <constraint firstItem="YRO-k0-Ey4" firstAttribute="height"
+                                constant="120" id="6qK-rm-5jR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeAreaLayoutGuide" id="Bcu-3y-fUS"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1"
+                    userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LaunchImage" width="120" height="120"/>
+    </resources>
+</document>
