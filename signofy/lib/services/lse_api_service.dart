@@ -8,8 +8,8 @@ class LseApiService {
   static const String _videoBaseUrl = '$_baseUrl/wp-content/uploads/videos';
 
   // ─── PON AQUÍ TUS CREDENCIALES ───────────────────────────────────────────
-  static const String _defaultUser = 'CarlaFdez';
-  static const String _defaultPass = 'carla.03106';
+  static const String _defaultUser = '';
+  static const String _defaultPass = '';
   // ─────────────────────────────────────────────────────────────────────────
 
   String? _sessionCookie;
